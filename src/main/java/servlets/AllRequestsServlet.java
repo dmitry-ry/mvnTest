@@ -23,9 +23,20 @@ public class AllRequestsServlet extends HttpServlet {
                       HttpServletResponse response) throws ServletException, IOException {
 
         Map<String, Object> pageVariables = createPageVariablesMap(request);
+
         pageVariables.put("message", "");
 
-        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+        if (pageVariables.get("pathInfo").equals("/mirror")){
+            pageVariables.put("mirrorKeyValue", request.getParameter("key"));
+            response.getWriter().println(PageGenerator.instance().getPage("mirror_RC.html", pageVariables));
+        }
+        else{
+//            pageVariables.put("message", pageVariables.get("parameters"));
+            response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+
+        }
+
+        //response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
