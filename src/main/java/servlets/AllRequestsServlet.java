@@ -26,15 +26,13 @@ public class AllRequestsServlet extends HttpServlet {
 
         pageVariables.put("message", "");
 
-        if (pageVariables.get("pathInfo").equals("/mirror")){
+        if ("/mirror".equals(pageVariables.get("pathInfo"))){
             pageVariables.put("mirrorKeyValue", request.getParameter("key"));
 //            response.getWriter().println(PageGenerator.instance().getPage("mirror_RC.html", pageVariables));
             response.getWriter().println(request.getParameter("key"));
-        }
-        else{
+        } else {
 //            pageVariables.put("message", pageVariables.get("parameters"));
             response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
-
         }
 
         //response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
