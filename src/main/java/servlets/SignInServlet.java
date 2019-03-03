@@ -1,6 +1,6 @@
 package servlets;
 
-import main.AccountService;
+import services.db.UserAccountsService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +12,8 @@ import java.util.Map;
 public class SignInServlet extends HttpServlet {
     private final static String PASSWORD = "password";
     private final static String LOGIN = "login";
+    private final UserAccountsService accountsService = new UserAccountsService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -22,9 +24,8 @@ public class SignInServlet extends HttpServlet {
         Map<String, String[]> allRqParameters = req.getParameterMap();
         String retMessage;
         if (allRqParameters.containsKey(PASSWORD) && allRqParameters.containsKey(LOGIN)) {
-            AccountService accService = AccountService.getInstance();
             try {
-                accService.login(allRqParameters.get(LOGIN)[0], allRqParameters.get(PASSWORD)[0]);
+                accountsService.login(allRqParameters.get(LOGIN)[0], allRqParameters.get(PASSWORD)[0]);
                 retMessage = "Authorized: " + allRqParameters.get(LOGIN)[0];
                 resp.setStatus(HttpServletResponse.SC_OK);
             } catch (Exception e) {
